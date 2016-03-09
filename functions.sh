@@ -50,7 +50,7 @@ function fuse(){
 }
 
 function ckswap(){
-for pid in `ps auxH|awk '{print $2}'`;do echo "Pid: $pid" && egrep -i '(swap|size|pid|/|\[)' /proc/$test/smaps ;done|egrep -v '[04] kB'|grep -Pzo "^(Pid[^\n]*|(?s:[^\n]*$.Swap[^\n]*$){2})"
+for pid in `ps auxH|awk '{print $2}'`;do echo "Pid: $pid" && egrep -i '(swap|size|pid|/|\[)' /proc/$pid/smaps ;done|egrep -v '[04] kB'|grep -Pzo "^(Pid[^\n]*|(?s:[^\n]*$.Swap[^\n]*$){2})"
 }
 function lsofp(){
       while true;do sleep 0.5;for test in `ps aux|egrep $1|awk '{print $2}'`;do lsof -p $test| grep "$HOME";done;done

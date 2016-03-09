@@ -26,9 +26,9 @@ Comment[en_US]=yEd Graph Editor                 # comment which appears as a too
 EOF
 }
 
-wget -O /tmp/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-chmod +x /tmp/wp
-alias wp='/tmp/wp'
+wget -O ~/tmp/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+chmod +x ~/tmp/wp
+alias wp='~/tmp/wp'
 
 function resetwp {
 	if [[ -f wp-config.php ]];then

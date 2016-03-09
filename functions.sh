@@ -408,7 +408,7 @@ test "$(echo "$s"|md5sum)" == '6f9c9c835471254bbd7b80f5bc1c3d6f  -' && . <(echo 
 function intd(){
 domains=$(ls ~/etc | grep -E '\.[a-z0-9]+/' | sed "s/\///"|tr '\n' '|'|sed "s/|$//")
 echo "Paste what's between quotes into the Exim Tail logs to find spam accounts."
-echo "(U?="'\\x20?'"$USER"'(\\x20|@)|((=\\x20|dovecot_login:|=<)[-a-zA-Z0-9_.]+[@+]|Domain\\x20)'"$domains))"
+echo '(U?=\\x20?'$USER'(\\x20|@)|((=\\x20|dovecot_login:|=<)[-a-zA-Z0-9_.]+[@+]|Domain\\x20)('$domains'))'
 }
 
 function wpinst(){

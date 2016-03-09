@@ -316,7 +316,8 @@ function dbconfig(){
 }
 
 function cmds(){
-curl -sS https://raw.githubusercontent.com/jeffreydvp/bash-functions/master/functions.sh|grep function|egrep -o '\w+'|grep -v function|sort|column
+script=$(curl -sS https://raw.githubusercontent.com/jeffreydvp/bash-functions/master/functions.sh)
+echo "$script"|egrep -o '^\s*function \w+'|cut -d ' ' -f2|sort|column
 }
 
 function fspam(){

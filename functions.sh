@@ -31,16 +31,16 @@ chmod +x ~/tmp/wp
 alias wp='~/tmp/wp'
 
 function resetwp {
-	if [[ -f wp-config.php ]];then
-		read db user pass host prefix <<< $(egrep -o '(DB_[NUPH]|_prefix)[^;]+' wp-config.php|grep -Po "[^'\"]+(?=(['\"]\)|[\"'])$)");
-		mysql -u "$user" -p"$pass" -h "$host" "$db" -e "UPDATE ${prefix}users SET user_pass=MD5('$2') WHERE ID=$1;" && echo "User $1 set to $2";
-	else
-		echo "wp-config not found"
-		return 1;
-	fi
+    if [[ -f wp-config.php ]];then
+        read db user pass host prefix <<< $(egrep -o '(DB_[NUPH]|_prefix)[^;]+' wp-config.php|grep -Po "[^'\"]+(?=(['\"]\)|[\"'])$)");
+        mysql -u "$user" -p"$pass" -h "$host" "$db" -e "UPDATE ${prefix}users SET user_pass=MD5('$2') WHERE ID=$1;" && echo "User $1 set to $2";
+    else
+        echo "wp-config not found"
+        return 1;
+    fi
 }
 function mwcheck {
-	wget -q http://74.220.215.202/~toshmtes/TempGrep/standalone.txt -O - | sh >> malware.txt;
+    wget -q http://74.220.215.202/~toshmtes/TempGrep/standalone.txt -O - | sh >> malware.txt;
 }
 function wptool(){
   . <(curl -sS https://bitbucket.org/petershaw_org/wptool/raw/0d190fac415b0e45d1e25c2c6e5de79bd152a6e6/wptool)
@@ -53,19 +53,19 @@ function ckswap(){
 for pid in `ps auxH|awk '{print $2}'`;do echo "Pid: $pid" && egrep -i '(swap|size|pid|/|\[)' /proc/$test/smaps ;done|egrep -v '[04] kB'|grep -Pzo "^(Pid[^\n]*|(?s:[^\n]*$.Swap[^\n]*$){2})"
 }
 function lsofp(){
-	  while true;do sleep 0.5;for test in `ps aux|egrep $1|awk '{print $2}'`;do lsof -p $test| grep "$HOME";done;done
+      while true;do sleep 0.5;for test in `ps aux|egrep $1|awk '{print $2}'`;do lsof -p $test| grep "$HOME";done;done
 }
 function nethead(){
-	ips=$(ss -tuna|egrep -v '(LISTEN|UNCON)'|sed 1d|awk '{print $5" "$6}'|egrep -o '[0-9]++ [:f]*[0-9]+\.[0-9.]+'|sort)
-	echo "$ips"|uniq -c|sort -n
+    ips=$(ss -tuna|egrep -v '(LISTEN|UNCON)'|sed 1d|awk '{print $5" "$6}'|egrep -o '[0-9]++ [:f]*[0-9]+\.[0-9.]+'|sort)
+    echo "$ips"|uniq -c|sort -n
         echo "Ports:"
         echo "$ips"|awk '{print $1}'|uniq -c|egrep '\s[1-2]?[0-9]{1,3}$'
         echo "Top IPs:"
-	for test in `echo "$ips"|uniq -c|sort -n|awk '{print $3}'|tail -n 6`;do
-	  dig_res=$(dig -x $test +short|head -n 1)
-	  echo -e "$test\t$dig_res"
-	done
-	  
+    for test in `echo "$ips"|uniq -c|sort -n|awk '{print $3}'|tail -n 6`;do
+      dig_res=$(dig -x $test +short|head -n 1)
+      echo -e "$test\t$dig_res"
+    done
+      
 }
 function checkbk(){
 for user in `egrep -o '^[^:]+' /etc/passwd`;do ll -d /backup/cpbackup/{daily,weekly}/$user.tar{,.gz} 2>/dev/null;done
@@ -182,27 +182,27 @@ function phpinfo(){
 
 function fwperms(){
 #Give write permission to all directories or all files for user
-	if [[ $1 =~ ^-[^a]$ ]]; then
-	  echo "$1 is not a valid option."
-	  return 1
-	elif [[ $1 =~ ^-(a?([^a]a?)){2,} ]]; then
-	  echo -ne "-"
-	  echo -ne "$1" | sed -E 's/-?([a-zA-Z0-9])/\1\n/g' | sort | tr '\n' ' ' | sed -E 's/ //g;s/(.)[^\1]*\1/\1/g;s/a//g' 
-	echo " are not valid options."
-	  return 1
-	fi
-	echo "Giving write permission to every dir for user";
-	done=0
-	find2perl . -type d ! -perm -500 -exec chmod -c u+rx */ {} | perl && done=1
-	while [ $done -eq 0 ];
-	do
-	  find2perl . -type d ! -perm -500 -exec chmod -c u+rx */ {} | perl && done=1
-	done
-	find2perl . ! -perm -200 -type d -exec chmod -c u+w {} | perl
-	if [[ $1 =~ ^-.*a ]]; then
-		find2perl . ! -perm -200 -type f -exec chmod -c u+w {} | perl
-	fi
-	echo "Done."
+    if [[ $1 =~ ^-[^a]$ ]]; then
+      echo "$1 is not a valid option."
+      return 1
+    elif [[ $1 =~ ^-(a?([^a]a?)){2,} ]]; then
+      echo -ne "-"
+      echo -ne "$1" | sed -E 's/-?([a-zA-Z0-9])/\1\n/g' | sort | tr '\n' ' ' | sed -E 's/ //g;s/(.)[^\1]*\1/\1/g;s/a//g' 
+    echo " are not valid options."
+      return 1
+    fi
+    echo "Giving write permission to every dir for user";
+    done=0
+    find2perl . -type d ! -perm -500 -exec chmod -c u+rx */ {} | perl && done=1
+    while [ $done -eq 0 ];
+    do
+      find2perl . -type d ! -perm -500 -exec chmod -c u+rx */ {} | perl && done=1
+    done
+    find2perl . ! -perm -200 -type d -exec chmod -c u+w {} | perl
+    if [[ $1 =~ ^-.*a ]]; then
+        find2perl . ! -perm -200 -type f -exec chmod -c u+w {} | perl
+    fi
+    echo "Done."
 }
 
 function fmailperms(){
@@ -220,53 +220,53 @@ function fmailperms(){
 function fpermsh(){
 #fix permissions by giving execute and read permission to directories and removing write permission from group and other
 #and adding read permission to files and removing write permission from group and other
-	echo "Fixing the permissions."
-	chmod -c uo+rx ~/public_html 2>/dev/null
-	chmod -c uo+rx . 2>/dev/null
-	done=0
-	find2perl . -type d ! -perm -500 -exec chmod -c u+rx */ {} | perl && done=1
-	while [ $done -eq 0 ];
-	do
-	  find2perl . -type d ! -perm -500 -exec chmod -c u+rx */ {} | perl && done=1
-	done
-	
-	for i in `find2perl ./ -perm -020 -type d | perl 2>/dev/null | sed "s/ /#$%/g"`; do 
-	j=$(echo $i | sed "s/#$%/ /g")
-		 ls "$j"/*.[pj][sh]? 2>/dev/null && chmod -c uo+xr,go-w "$j"
-	done
-	for i in `find2perl ./ -perm -002 -type d | perl 2>/dev/null | sed "s/ /#$%/g"`; do 
-	j=$(echo $i | sed "s/#$%/ /g")
-		 ls "$j"/*.[pj][sh]? 2>/dev/null && chmod -c uo+xr,go-w "$j"
-	done
-	for i in `find2perl ./ ! -perm -505 -type d | perl 2>/dev/null | sed "s/ /#$%/g"`; do 
-	j=$(echo $i | sed "s/#$%/ /g")
-		 ls "$j"/*.[pj][sh]? 2>/dev/null && chmod -c uo+xr,go-w "$j"
-	done
-	
-	find2perl ./ -perm -002 -name \*.[pj][sh]? -type f -exec chmod -c uo+r,go-w {} | perl
-	find2perl ./ -perm -020 -name \*.[pj][sh]? -type f -exec chmod -c uo+r,go-w {} | perl
-	find2perl ./ ! -perm -404 -name \*.[pj][sh]? -type f -exec chmod -c uo+r,go-w {} | perl
-	
-	echo "Done"
+    echo "Fixing the permissions."
+    chmod -c uo+rx ~/public_html 2>/dev/null
+    chmod -c uo+rx . 2>/dev/null
+    done=0
+    find2perl . -type d ! -perm -500 -exec chmod -c u+rx */ {} | perl && done=1
+    while [ $done -eq 0 ];
+    do
+      find2perl . -type d ! -perm -500 -exec chmod -c u+rx */ {} | perl && done=1
+    done
+    
+    for i in `find2perl ./ -perm -020 -type d | perl 2>/dev/null | sed "s/ /#$%/g"`; do 
+    j=$(echo $i | sed "s/#$%/ /g")
+         ls "$j"/*.[pj][sh]? 2>/dev/null && chmod -c uo+xr,go-w "$j"
+    done
+    for i in `find2perl ./ -perm -002 -type d | perl 2>/dev/null | sed "s/ /#$%/g"`; do 
+    j=$(echo $i | sed "s/#$%/ /g")
+         ls "$j"/*.[pj][sh]? 2>/dev/null && chmod -c uo+xr,go-w "$j"
+    done
+    for i in `find2perl ./ ! -perm -505 -type d | perl 2>/dev/null | sed "s/ /#$%/g"`; do 
+    j=$(echo $i | sed "s/#$%/ /g")
+         ls "$j"/*.[pj][sh]? 2>/dev/null && chmod -c uo+xr,go-w "$j"
+    done
+    
+    find2perl ./ -perm -002 -name \*.[pj][sh]? -type f -exec chmod -c uo+r,go-w {} | perl
+    find2perl ./ -perm -020 -name \*.[pj][sh]? -type f -exec chmod -c uo+r,go-w {} | perl
+    find2perl ./ ! -perm -404 -name \*.[pj][sh]? -type f -exec chmod -c uo+r,go-w {} | perl
+    
+    echo "Done"
 }
 function fperms(){
 #lightly try to fix permissions by only removing write permission from group and other on php and js files
-	echo "Fixing the permissions."
-	chmod -c uo+rx . 2>/dev/null
-	for i in `find2perl ./ -perm -020 -type d 2>/dev/null | perl 2>/dev/null | sed "s/ /#%/g"`; do 
-	  j="$(echo $i | sed "s/#%/ /g")"
-	  ls "$j"/*.[pj][sh]? 2>/dev/null 2>/dev/null && chmod -c go-w "$j"
-	done
-	for i in `find2perl ./ -perm -002 -type d 2>/dev/null | perl 2>/dev/null | sed "s/ /#%/g"`; do 
-	 j="$(echo $i | sed "s/#%/ /g")"
-	 ls "$j"/*.[pj][sh]? 2>/dev/null 2>/dev/null && chmod -c go-w  "$j"
-	done
-	
-	
-	find2perl ./ -perm -020 -perm -404 -name \*.[pj][sh]? -type f -exec chmod -c go-w {} | perl 2>/dev/null
-	find2perl ./ -perm -002 -perm -404 -name \*.[pj][sh]? -type f -exec chmod -c go-w {} | perl 2>/dev/null
-	
-	echo "Done"
+    echo "Fixing the permissions."
+    chmod -c uo+rx . 2>/dev/null
+    for i in `find2perl ./ -perm -020 -type d 2>/dev/null | perl 2>/dev/null | sed "s/ /#%/g"`; do 
+      j="$(echo $i | sed "s/#%/ /g")"
+      ls "$j"/*.[pj][sh]? 2>/dev/null 2>/dev/null && chmod -c go-w "$j"
+    done
+    for i in `find2perl ./ -perm -002 -type d 2>/dev/null | perl 2>/dev/null | sed "s/ /#%/g"`; do 
+     j="$(echo $i | sed "s/#%/ /g")"
+     ls "$j"/*.[pj][sh]? 2>/dev/null 2>/dev/null && chmod -c go-w  "$j"
+    done
+    
+    
+    find2perl ./ -perm -020 -perm -404 -name \*.[pj][sh]? -type f -exec chmod -c go-w {} | perl 2>/dev/null
+    find2perl ./ -perm -002 -perm -404 -name \*.[pj][sh]? -type f -exec chmod -c go-w {} | perl 2>/dev/null
+    
+    echo "Done"
 }
 
 

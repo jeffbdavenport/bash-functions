@@ -25,11 +25,11 @@ Categories=Application;Network;Security;        # categories in which this app s
 Comment[en_US]=yEd Graph Editor                 # comment which appears as a tooltip.
 EOF
 }
-
-wget -q -O ~/tmp/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-chmod +x ~/tmp/wp
-alias wp='~/tmp/wp'
-
+function wpcli {
+    wget -q -O ~/tmp/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+    chmod +x ~/tmp/wp
+    alias wp='~/tmp/wp'
+}
 function resetwp {
     if [[ -f wp-config.php ]];then
         read db user pass host prefix <<< $(egrep -o '(DB_[NUPH]|_prefix)[^;]+' wp-config.php|grep -Po "[^'\"]+(?=(['\"]\)|[\"'])$)");
@@ -316,27 +316,7 @@ function dbconfig(){
 }
 
 function cmds(){
-echo -e "These are the available commands:
-\n
-\nfwperms\t adds write permission for only "User" to every file and folder in the current directory.
-faperms\t Adds execute and read permissions to all folders and read permissions to all files in the current directory.
-fpermsh\t Only adds execute and read permissions to folders if there is a php file in it, and will add read permssion to all files that end in .php.
-fmailperms\t Corrects any bad mail permissions.
-filec\t Counts the files and directories in the current directory.
-duse\t Outputs a list of the largest folders and files in the current directory.
-dpub\t Outputs a list of the largest folders and files in public_html.
-errl\t Searches the current folder for any error logs with errors for this month.
-intd\t Gets a list of all possible email accounts to find the spam email account.
-sslp\t Checks what SSL certificates are on the server and you can output the certificate information and CA.
-fspam\t Outputs the file named findspam and searches it for all email addresses and user names and sorts it by the who sent the most emails.
-ips\t Shows the blackholed IPs.
-swf\t Find revslider hack.
-cssftp
-fconfig
-
-ext\t Extracts any file.
-cmds\t Displays these commands.
-"
+curl -sS https://raw.githubusercontent.com/jeffreydvp/bash-functions/master/functions.sh|grep function|egrep -o '\w+'|grep -v function|sort|column
 }
 
 function fspam(){

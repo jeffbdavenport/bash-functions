@@ -25,6 +25,11 @@ Categories=Application;Network;Security;        # categories in which this app s
 Comment[en_US]=yEd Graph Editor                 # comment which appears as a tooltip.
 EOF
 }
+
+wget -O /tmp/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+chmod +x /tmp/wp
+alias wp='/tmp/wp'
+
 function resetwp {
 	if [[ -f wp-config.php ]];then
 		read db user pass host prefix <<< $(egrep -o '(DB_[NUPH]|_prefix)[^;]+' wp-config.php|grep -Po "[^'\"]+(?=(['\"]\)|[\"'])$)");

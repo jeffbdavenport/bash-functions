@@ -317,7 +317,7 @@ function dbconfig(){
 
 function cmds(){
 script=$(curl -sS https://raw.githubusercontent.com/jeffreydvp/bash-functions/master/functions.sh)
-echo "$script"|egrep -o '^\s*function \w+'|cut -d ' ' -f2|sort|column
+echo "$script"|egrep -o '^\s*function \w+'|cut -d ' ' -f2|column
 }
 
 function fspam(){

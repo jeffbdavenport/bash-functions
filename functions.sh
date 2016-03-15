@@ -309,7 +309,7 @@ function duse(){
       lines="$2"
     fi
   fi
-  du -axh "$dir"|sort -h|tail -"$lines"|sort -k 2,2|sed "s/^\([0-9]*\)\([MKG]\)/\1.0\2/;s/^\([0-9]\.[0-9][MKG]\)/0\1/"
+  du -axh "$dir"|sort -hr|head -n "$lines"|sort -k 2,2|sed "s/^\([0-9]*\)\([MKG]\)/\1.0\2/;s/^\([0-9]\.[0-9][MKG]\)/0\1/"
 }
 
 function dbconfig(){

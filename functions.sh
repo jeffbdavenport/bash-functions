@@ -9,7 +9,7 @@ alias vi='vic'
 alias vic='vim -c "nnoremap n h|nnoremap e j|nnoremap u k|nnoremap i l|nnoremap l i|nnoremap h n|nnoremap k u|nnoremap j e|vnoremap n h|vnoremap e j|vnoremap u k|vnoremap i l|vnoremap l i|vnoremap h n|vnoremap k u|vnoremap j e"'
 alias rnew='taskset -c 0-2 ~/bin/runit -jar'
 alias rmcom='egrep -v "^\s*(//|/\s*\*|\*|;|#|$)"'
-alias base='perl -ne "s{\.?/[^/]*(?=/)}{    }g;print;"'
+alias base='perl -ne "s/\t/        /;print;"|perl -ne "1 while s{^(\s*[^\s]+\s*).?/[^/]+(?=/)}{  \1}g;print;"'
 bind '"\C-t": reverse-search-history'
 TERM=xterm
 function dshort(){

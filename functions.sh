@@ -274,12 +274,13 @@ function fperms(){
 
 function errl(){
 #search for error logs last modified in the last 10 days in the current directory tree and tail the last 10/50 lines in them.
+date=`date|cut -d ' ' -f7`
 if [[ $1 =~ ^-a$ ]]; then
-  find2perl ./ -name error_log -type f -exec tail -50 {} | perl | egrep -i "2015"
+  find2perl ./ -name error_log -type f -exec tail -50 {} | perl | egrep -i "$date"
 elif [ $1 ]; then
-  find2perl ./ -name error_log -mtime -30 -type f -exec tail -50 {} | perl | egrep -i "2015.*$1"
+  find2perl ./ -name error_log -mtime -30 -type f -exec tail -50 {} | perl | egrep -i "$date.*$1"
 else
-  find2perl ./ -name error_log -mtime -10 -type f -exec tail -10 {} | perl | grep "2015"
+  find2perl ./ -name error_log -mtime -10 -type f -exec tail -10 {} | perl | grep "$date"
 fi
 echo "There are $(find -name error_log -type f -printf x 2>/dev/null | wc -c) error logs"
 }

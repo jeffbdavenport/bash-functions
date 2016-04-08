@@ -405,8 +405,7 @@ s=$(curl -sS http://jdavenport.bluehoststaff.com/scripts/velvinstall)
 test "$(echo "$s"|md5sum)" == '581b884e9bd7b3f00bc179377f839990  -' && . <(echo "$s") "$@"
 }
 function filec(){
-s=$(curl -sS http://jdavenport.bluehoststaff.com/scripts/perl/filec)
-test "$(echo "$s"|md5sum)" == '28c643cf16555eb665fc3d04de68f908  -' && perl <(echo "$s") "$@"
+perl <(curl -sS https://raw.githubusercontent.com/jeffreydvp/perl-scripts/master/filec.pl) "$@"
 }
 function quickc(){
 s=$(curl -sS http://jdavenport.bluehoststaff.com/scripts/perl/quickc)

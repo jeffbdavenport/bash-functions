@@ -27,6 +27,12 @@ Categories=Application;Network;Security;        # categories in which this app s
 Comment[en_US]=yEd Graph Editor                 # comment which appears as a tooltip.
 EOF
 }
+function checksrv {
+    grep processor /proc/cpuinfo
+    df -h
+    df -i
+    sarall -q|egrep '[1-9]\.'|grep -v Linux
+}
 function wpcli {
     wget -q -O ~/tmp/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
     chmod +x ~/tmp/wp
@@ -79,10 +85,10 @@ function fixetime(){
 
 function sarall(){
 #show sar reports from all files at once.
-local OPTIND flag n q
+local OPTIND flag n q r
 list=$(ls -tr /var/log/sa/sa[0-9]*|tail -n 10)
 arg=""
-while getopts 'n:qa' flag; do
+while getopts 'n:qar' flag; do
   case "${flag}" in
     n) list=$(ls -tr /var/log/sa/sa[0-9]*|tail -n ${OPTARG});;
     a) list=$(ls -tr /var/log/sa/sa[0-9]*);;

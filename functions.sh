@@ -28,11 +28,11 @@ Comment[en_US]=yEd Graph Editor                 # comment which appears as a too
 EOF
 }
 function checksrv {
+    sarall -r|awk '{print $1" "$8}'|egrep '([8-9]|[1-9][0-9])[0-9]\.'
+    sarall -q|egrep '[1-9]\.'
     grep processor /proc/cpuinfo
     df -h
     df -i
-    sarall -q|egrep '[1-9]\.'|grep -v Linux
-    sarall -r|awk '{print $1" "$8}'|egrep '([8-9][1-9]|[1-9][0-9][0-9])\.'|grep -v Linux
 }
 function wpcli {
     wget -q -O ~/tmp/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar

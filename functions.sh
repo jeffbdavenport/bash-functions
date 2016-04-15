@@ -28,7 +28,7 @@ Comment[en_US]=yEd Graph Editor                 # comment which appears as a too
 EOF
 }
 function checksrv {
-    sarall -r|awk '{print $1" "$8}'|egrep '([8-9]|[1-9][0-9])[0-9]\.'
+    sarall -r|awk '{print $1" "$4" "$8}'|egrep '([8-9]|[1-9][0-9])[0-9]\.'
     sarall -q|egrep '[1-9]\.'
     grep processor /proc/cpuinfo
     df -h

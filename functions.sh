@@ -83,7 +83,7 @@ function nethead(){
       
 }
 function checkbk(){
-for user in `egrep -o '^[^:]+' /etc/passwd`;do ll -d /backup/cpbackup/{daily,weekly}/$user.tar{,.gz} 2>/dev/null;done
+for user in `egrep -o '^[^:]+' /etc/passwd`;do ll -d /backup/cpbackup/{daily,weekly,monthly}/$user.tar{,.gz} 2>/dev/null;done
 }
 function fixetime(){
 #replace last modified date on emails in current folder to match the filename timestamp

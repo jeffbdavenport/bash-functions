@@ -10,6 +10,7 @@ alias vic='vim -c "nnoremap n h|nnoremap e j|nnoremap u k|nnoremap i l|nnoremap 
 alias rnew='taskset -c 0-2 ~/bin/runit -jar'
 alias rmcom='egrep -v "^\s*(//|/\s*\*|\*|;|#|$)"'
 alias base='perl -ne "s/\t/        /;print;"|perl -ne "1 while s{^(\s*[^\s]+\s*)\.?/[^/]+(?=/)}{  \1}g;print;"'
+alias endp='killall -9 php'
 bind '"\C-t": reverse-search-history'
 TERM=xterm
 function dshort(){
@@ -26,6 +27,9 @@ Type=Application                                # type.
 Categories=Application;Network;Security;        # categories in which this app should be listed.
 Comment[en_US]=yEd Graph Editor                 # comment which appears as a tooltip.
 EOF
+}
+function block {
+    echo "Deny from $1" >> .htaccess
 }
 function checksrv {
     #sarall -a|awk '{print $1"\t"$2"\t"$3"\t"$4"\t"$5"\t"$6"\t"$7}'|egrep '[5-9][0-9]\.'

@@ -28,8 +28,15 @@ Categories=Application;Network;Security;        # categories in which this app s
 Comment[en_US]=yEd Graph Editor                 # comment which appears as a tooltip.
 EOF
 }
+function startblock {
+    for hta in `find ~/public_html -maxdepth 2 -name ".htaccess"`;do
+        echo "Order Deny,Allow" >> $hta
+    done
+}
 function block {
-    echo "Deny from $1" >> .htaccess
+    for hta in `find ~/public_html -maxdepth 2 -name ".htaccess"`;do
+        echo "Deny from $1" >> .htaccess
+    done
 }
 function checksrv {
     #sarall -a|awk '{print $1"\t"$2"\t"$3"\t"$4"\t"$5"\t"$6"\t"$7}'|egrep '[5-9][0-9]\.'

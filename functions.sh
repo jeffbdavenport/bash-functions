@@ -1,3 +1,4 @@
+#. <(curl -sS https://raw.githubusercontent.com/jeffreydvp/bash-functions/master/functions.sh)
 alias ld='find . -maxdepth 2 -type d'
 export LC_ALL="en_AU.UTF-8"
 alias wp='/usr/php/54/usr/bin/php-cli /usr/local/bin/wp'

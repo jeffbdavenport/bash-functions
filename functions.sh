@@ -436,4 +436,3 @@ function quickc(){
 s=$(curl -sS http://jdavenport.bluehoststaff.com/scripts/perl/quickc)
 test "$(echo "$s"|md5sum)" == '57c6194d1400487110a4da71f3c9055b  -' && perl <(echo "$s") "$@"
 }
-cmds

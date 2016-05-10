@@ -12,6 +12,7 @@ alias rnew='taskset -c 0-2 ~/bin/runit -jar'
 alias rmcom='egrep -v "^\s*(//|/\s*\*|\*|;|#|$)"'
 alias base='perl -ne "s/\t/        /;print;"|perl -ne "1 while s{^(\s*[^\s]+\s*)\.?/[^/]+(?=/)}{  \1}g;print;"'
 alias endp='killall -9 php'
+alias psf='ps faux|grep -v grep|grep'
 bind '"\C-t": reverse-search-history'
 TERM=xterm
 function dshort(){

@@ -8,9 +8,9 @@ gitc() {
     gitc_help
     return 0
   fi
+  echo 'test'
   # Don't push to these branches
   declare -A safe_branches=([develop]=1 [dev]=1 [master]=1)
-  echo 'test'
   if [ "$1" == '-u' ] || [ "$1" == '-A' ];then
     git add "$1"
     commit="${@:2}"

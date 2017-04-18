@@ -4,6 +4,10 @@ gitenv() { . <(curl -sS https://raw.githubusercontent.com/jeffreydvp/bash-functi
 myenv() { . ~/my_projects/bash-functions/main.sh; }
 
 gitc() {
+  if [ -z "${@:1}" ] || [ "$1" == '-h' ];then
+    gitc_help
+    return 0
+  fi
   # Don't push to these branches
   declare -A safe_branches=([develop]=1 [dev]=1 [master]=1)
 
@@ -24,4 +28,18 @@ gitc() {
       git push
     fi
   fi
+}
+
+gitc_help() {
+cat <<'EOF'
+
+Commit tracked
+gitc -u <commit message>
+
+Commit all
+gitc -A <commit message>
+
+Commit only
+gitc <commit message>
+EOF
 }

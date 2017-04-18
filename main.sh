@@ -22,7 +22,7 @@ gitc() {
     current="$(git rev-parse --abbrev-ref HEAD)"
     if [ "$current" == 'rails-base' ];then
       git push -u rails-base rails-base:master
-    elif [[ -n "${allowed_branches[$current]}" ]];then
+    elif [[ -n "${safe_branches[$current]}" ]];then
       echo "Must manually push to dev and master"
     else
       git push

@@ -1,4 +1,10 @@
-#!/bin/bash -l
+# Load the profile
+if [ -z ${PROFILE_LOADED+defined} ];then
+  export PROFILE_LOADED=1
+  bash -l
+  return 0
+fi
+
 # Reload env
 gitenv() { . <(curl -sS https://raw.githubusercontent.com/jeffreydvp/bash-functions/master/functions.sh); }
 myenv() { . ~/my_projects/bash-functions/main.sh; }

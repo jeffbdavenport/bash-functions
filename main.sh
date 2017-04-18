@@ -7,13 +7,11 @@ gitc() {
   declare -A safe_branches=(
     [develop]=1, [dev]=1, [master]=1
   )
-  echo 'test'
 
-  if [ -z "${@:1}" ] || [ "$1" == '-h' ];then
+  if [ "$1" == '-h' ];then
     gitc_help
     return 0
   fi
-  echo 'test'
   # Don't push to these branches
 
   if [ "$1" == '-u' ] || [ "$1" == '-A' ];then

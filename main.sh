@@ -7,6 +7,7 @@ gitc() {
   declare -A safe_branches=(
     [develop]=1, [dev]=1, [master]=1
   )
+  echo 'test'
 
   if [ -z "${@:1}" ] || [ "$1" == '-h' ];then
     gitc_help

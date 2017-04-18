@@ -4,21 +4,22 @@ gitenv() { . <(curl -sS https://raw.githubusercontent.com/jeffreydvp/bash-functi
 myenv() { . ~/my_projects/bash-functions/main.sh; }
 
 gitc() {
+  # Don't push to these branches
   declare -A safe_branches=(
     [develop]=1, [dev]=1, [master]=1
   )
+
   all="${@:1}"
   if [ -z "$all" ] || [ "$1" == '-h' ];then
     gitc_help
     return 0
   fi
-  # Don't push to these branches
 
   if [ "$1" == '-u' ] || [ "$1" == '-A' ];then
     git add "$1"
     commit="${@:2}"
   else
-    commit="${@:1}"
+    commit="$all"
   fi
   if ! $(git diff-index --quiet HEAD --);then
     git commit -m "$commit"

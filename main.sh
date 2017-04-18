@@ -1,7 +1,8 @@
 # Load the profile
 if [ -z ${PROFILE_LOADED+defined} ];then
   export PROFILE_LOADED=1
-  bash -l
+  sleep 0.1
+  /bin/bash -l
   return 0
 fi
 

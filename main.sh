@@ -1,4 +1,6 @@
 #!/bin/bash -l
+# Reload env
+gitenv() { . <(curl -sS https://raw.githubusercontent.com/jeffreydvp/bash-functions/master/functions.sh); }
 myenv() { . ~/my_projects/bash-functions/main.sh; }
 
 gitc() {

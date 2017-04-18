@@ -4,7 +4,9 @@ gitenv() { . <(curl -sS https://raw.githubusercontent.com/jeffreydvp/bash-functi
 myenv() { . ~/my_projects/bash-functions/main.sh; }
 
 gitc() {
-  declare -A safe_branches=([develop]=1, [dev]=1, [master]=1)
+  declare -A safe_branches=(
+    [develop]=1, [dev]=1, [master]=1
+  )
 
   if [ -z "${@:1}" ] || [ "$1" == '-h' ];then
     gitc_help

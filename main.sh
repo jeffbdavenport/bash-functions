@@ -8,7 +8,7 @@ gitc() {
     [develop]=1, [dev]=1, [master]=1
   )
 
-  if [ -z "$@" ] || [ "$1" == '-h' ];then
+  if [ -z "$*" ] || [ "$1" == '-h' ];then
     gitc_help
     return 0
   fi

@@ -9,7 +9,7 @@ gitc() {
     return 0
   fi
   # Don't push to these branches
-  declare -A safe_branches=([develop]=1 [dev]=1 [master]=1)
+  #declare -A safe_branches=([develop]=1 [dev]=1 [master]=1)
 
   if [ "$1" == '-u' ] || [ "$1" == '-A' ];then
     git add "$1"

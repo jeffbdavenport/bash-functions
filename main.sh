@@ -13,6 +13,7 @@ gitc() {
     gitc_help
     return 0
   fi
+  echo 'test'
   # Don't push to these branches
 
   if [ "$1" == '-u' ] || [ "$1" == '-A' ];then

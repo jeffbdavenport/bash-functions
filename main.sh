@@ -54,3 +54,5 @@ Commit only
 gitc <commit message>
 EOF
 }
+
+PATH=$(ruby -e "puts '$PATH'.split(':').uniq.join(':')")

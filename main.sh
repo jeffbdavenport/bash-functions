@@ -6,6 +6,8 @@ if [ -z ${PROFILE_LOADED+defined} ];then
   return 0
 fi
 
+alias clean_branches='for b in `git branch|sed "/^\*/d"|sed "/develop/d"`;do git branch -d $b;done'
+
 # Reload env
 gitenv() { . <(curl -sS https://raw.githubusercontent.com/jeffreydvp/bash-functions/master/functions.sh); }
 myenv() { . ~/my_projects/bash-functions/main.sh; }

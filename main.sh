@@ -61,5 +61,28 @@ gitc <commit message>
 EOF
 }
 
+function duse(){
+  dir='.'
+  lines='20'
+  if [ -e "$1" ];then
+    dir="$1"
+  else
+    if [[ $1 =~ ^[0-9]+$ ]];then
+      lines="$1"
+    fi
+  fi
+  if [ -e "$2" ];then
+    dir="$2"
+  else
+    if [[ $2 =~ ^[0-9]+$ ]];then
+      lines="$2"
+    fi
+  fi
+  du -axh "$dir"|sort -hr|head -n "$lines"|sort -k 2,2|sed "s/^\([0-9]*\)\([MKG]\)/\1.0\2/;s/^\([0-9]\.[0-9][MK]\)/0\1/"
+}
+
+
+
+
 ruby $bash_root/main.rb
 echo 'Loaded environment'

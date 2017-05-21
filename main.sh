@@ -1,16 +1,20 @@
-# Load the profile
-if [ -z ${PROFILE_LOADED+defined} ];then
-  export PROFILE_LOADED=1
-  sleep 0.1
-  /bin/bash -l
+# Ensure profile is loaded
+bash_root=~/my_projects/bash-functions
+gitenv() { . <(curl -sS https://raw.githubusercontent.com/jeffreydvp/bash-functions/master/functions.sh); }
+myenv() { . $bash_root/main.sh; }
+
+if [ "$0" != 'bash' ];then
+  bash -l
   return 0
 fi
 
 alias clean_branches='for b in `git branch|sed "/^\*/d"|sed "/develop/d"`;do git branch -d $b;done'
+if ! hash ruby 2>/dev/null;then
+  return 0
+fi
+
 
 # Reload env
-gitenv() { . <(curl -sS https://raw.githubusercontent.com/jeffreydvp/bash-functions/master/functions.sh); }
-myenv() { . ~/my_projects/bash-functions/main.sh; }
 
 gitc() {
   # Don't push to these branches
@@ -44,7 +48,7 @@ gitc() {
 }
 
 gitc_help() {
-cat <<'EOF'
+  cat <<'EOF'
 
 Commit tracked
 gitc -u <commit message>
@@ -57,4 +61,5 @@ gitc <commit message>
 EOF
 }
 
-PATH=$(ruby -e "puts '$PATH'.split(':').uniq.join(':')")
+ruby $bash_root/main.rb
+echo 'Loaded environment'

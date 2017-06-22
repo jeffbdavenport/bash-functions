@@ -66,9 +66,8 @@ gitc <commit message>
 EOF
 }
 
-<<<<<<< HEAD
 PATH=$(ruby -e "puts '$PATH'.split(':').uniq.join(':')")
-=======
+
 function duse(){
   dir='.'
   lines='20'
@@ -94,4 +93,3 @@ function duse(){
 
 ruby $bash_root/main.rb
 echo 'Loaded environment'
->>>>>>> ea468fa3af0f90c19174ce386f420b347fb9d814

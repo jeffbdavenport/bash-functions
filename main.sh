@@ -1,8 +1,10 @@
-# Load the profile
-if [ -z ${PROFILE_LOADED+defined} ];then
-  export PROFILE_LOADED=1
-  sleep 0.1
-  /bin/bash -l
+# Ensure profile is loaded
+bash_root=~/my_projects/bash-functions
+gitenv() { . <(curl -sS https://raw.githubusercontent.com/jeffreydvp/bash-functions/master/functions.sh); }
+myenv() { . $bash_root/main.sh; }
+
+if [ "$0" != 'bash' ];then
+  bash -l
   return 0
 fi
 
@@ -12,10 +14,12 @@ clean_branches(){
     git branch -d $b
   done
 }
+if ! hash ruby 2>/dev/null;then
+  return 0
+fi
+
 
 # Reload env
-gitenv() { . <(curl -sS https://raw.githubusercontent.com/jeffreydvp/bash-functions/master/functions.sh); }
-myenv() { . ~/my_projects/bash-functions/main.sh; }
 
 gitc() {
   # Don't push to these branches
@@ -49,7 +53,7 @@ gitc() {
 }
 
 gitc_help() {
-cat <<'EOF'
+  cat <<'EOF'
 
 Commit tracked
 gitc -u <commit message>
@@ -62,4 +66,32 @@ gitc <commit message>
 EOF
 }
 
+<<<<<<< HEAD
 PATH=$(ruby -e "puts '$PATH'.split(':').uniq.join(':')")
+=======
+function duse(){
+  dir='.'
+  lines='20'
+  if [ -e "$1" ];then
+    dir="$1"
+  else
+    if [[ $1 =~ ^[0-9]+$ ]];then
+      lines="$1"
+    fi
+  fi
+  if [ -e "$2" ];then
+    dir="$2"
+  else
+    if [[ $2 =~ ^[0-9]+$ ]];then
+      lines="$2"
+    fi
+  fi
+  du -axh "$dir"|sort -hr|head -n "$lines"|sort -k 2,2|sed "s/^\([0-9]*\)\([MKG]\)/\1.0\2/;s/^\([0-9]\.[0-9][MK]\)/0\1/"
+}
+
+
+
+
+ruby $bash_root/main.rb
+echo 'Loaded environment'
+>>>>>>> ea468fa3af0f90c19174ce386f420b347fb9d814

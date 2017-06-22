@@ -6,7 +6,12 @@ if [ -z ${PROFILE_LOADED+defined} ];then
   return 0
 fi
 
-alias clean_branches='for b in `git branch|sed "/^\*/d"|sed "/develop/d"`;do git branch -d $b;done'
+clean_branches(){
+  git checkout develop
+  for b in `git branch --merged|sed "/^\*/d"|sed "/develop/d"`;do
+    git branch -d $b
+  done
+}
 
 # Reload env
 gitenv() { . <(curl -sS https://raw.githubusercontent.com/jeffreydvp/bash-functions/master/functions.sh); }

@@ -34,14 +34,8 @@ gitc() {
     return 0
   fi
 
-  if [ "$1" == '-u' ] || [ "$1" == '-A' ];then
-    git add "$1"
-    commit="${@:2}"
-  else
-    commit="$all"
-  fi
   if ! $(git diff-index --quiet HEAD --);then
-    git commit -m "$commit"
+    git commit -am "$all"
     current="$(git rev-parse --abbrev-ref HEAD)"
     if [ "$current" == 'rails-base' ];then
       git push -u rails-base rails-base:master

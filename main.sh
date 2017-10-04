@@ -1,6 +1,6 @@
 # Ensure profile is loaded
 bash_root=~/my_projects/bash-functions
-alias compare_develop='branch=$(git branch |grep "*"|sed "s/^* //");git checkout -b compare_develop && git merge develop --squash && git commit -m "merge"; git diff develop && git checkout "$branch" && git branch -D compare_develop'
+alias compare_develop='branch=$(git branch |grep "*"|sed "s/^* //");git checkout -b compare_develop && git merge develop --squash && git commit -m "merge"; git diff develop && git reset --hard && git checkout "$branch" && git branch -D compare_develop'
 gitenv() { . <(curl -sS https://raw.githubusercontent.com/jeffreydvp/bash-functions/master/functions.sh); }
 myenv() { . $bash_root/main.sh; }
 xmod() { xmodmap ~/.Xmodmap; }

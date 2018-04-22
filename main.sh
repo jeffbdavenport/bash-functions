@@ -1,6 +1,24 @@
 # Ensure profile is loaded
 bash_root=~/my_projects/bash-functions
-alias compare_develop='branch=$(git branch |grep "*"|sed "s/^* //");git checkout -b compare_develop && git merge develop --squash && git commit -m "merge"; git diff develop && git reset --hard && git checkout "$branch" && git branch -D compare_develop'
+
+compare_develop() {
+    git branch -D compare_develop
+    git checkout -b compare_develop && git merge origin/develop --squash -s recursive && git add -A && git commit -m "merge"
+}
+
+delete_compare_develop() {
+  git reset --hard && git checkout "$1"  && git branch -D compare_develop
+}
+
+develop_diff() {
+  branch=$(git branch --merged|grep \*|sed "s/^* //")
+  compare_develop >/dev/null 2>&1
+  git diff origin/develop --name-status | grep -v ^D
+  delete_compare_develop "$branch" >/dev/null 2>&1
+}
+
+alias changed_files="atom $(develop_diff|sed 's/^.\s*//'|tr '\n', ' ')"
+
 gitenv() { . <(curl -sS https://raw.githubusercontent.com/jeffreydvp/bash-functions/master/functions.sh); }
 myenv() { . $bash_root/main.sh; }
 xmod() { xmodmap ~/.Xmodmap; }
@@ -64,7 +82,7 @@ EOF
 
 PATH=$(ruby -e "puts '$PATH'.split(':').uniq.join(':')")
 
-function duse(){
+duse(){
   dir='.'
   lines='20'
   if [ -e "$1" ];then
@@ -84,31 +102,46 @@ function duse(){
   du -axh "$dir"|sort -hr|head -n "$lines"|sort -k 2,2|sed "s/^\([0-9]*\)\([MKG]\)/\1.0\2/;s/^\([0-9]\.[0-9][MK]\)/0\1/"
 }
 
-function ext()
+ext()
 # Handy Extract Program
 {
-    if [ -f $1 ] ; then
-        case $1 in
-            *.tar.bz2)   tar xvjf $1     ;;
-            *.tar.gz)    tar xvzf $1     ;;
-            *.bz2)       bunzip2 $1      ;;
-            *.rar)       unrar x $1      ;;
-            *.gz)        gunzip $1       ;;
-            *.tar)       tar xvf $1      ;;
-            *.tbz2)      tar xvjf $1     ;;
-            *.xz)        tar xvJf $1     ;;
-            *.tgz)       tar xvzf $1     ;;
-            *.zip)       unzip $1        ;;
-            *.Z)         uncompress $1   ;;
-            *.7z)        7z x $1         ;;
-            *)           echo "'$1' cannot be extracted via >extract<" ;;
-        esac
-    else
-        echo "'$1' is not a valid file!"
-    fi
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2) tar xvjf $1     ;;
+      *.tar.gz)  tar xvzf $1     ;;
+      *.bz2)     bunzip2 $1      ;;
+      *.rar)     unrar x $1      ;;
+      *.gz)      gunzip $1       ;;
+      *.tar)     tar xvf $1      ;;
+      *.tbz2)    tar xvjf $1     ;;
+      *.xz)      tar xvJf $1     ;;
+      *.tgz)     tar xvzf $1     ;;
+      *.zip)     unzip $1        ;;
+      *.Z)       uncompress $1   ;;
+      *.7z)      7z x $1         ;;
+      *)         echo "'$1' cannot be extracted via >extract<" ;;
+    esac
+  else
+    echo "'$1' is not a valid file!"
+  fi
 }
 
+ssh()
+{
+  guake -e "guake -r $1"
+  guake -e "/usr/bin/ssh ${@:1}"
+}
 
+rails()
+{
+  if [ "$1" == "c" ];then
+    guake -r "local-console"
+  elif [ "$1" == "s" ];then
+    guake -r "local-server"
+  fi
+  $GEM_HOME/bin/rails ${@:1}
+}
 
 ruby $bash_root/main.rb
+guake -r 'local'
 echo 'Loaded environment'

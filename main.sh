@@ -17,7 +17,9 @@ develop_diff() {
   delete_compare_develop "$branch" >/dev/null 2>&1
 }
 
-alias changed_files="atom $(develop_diff|sed 's/^.\s*//'|tr '\n', ' ')"
+changed_files() {
+ atom $(develop_diff|sed 's/^.\s*//'|tr '\n', ' ')
+}
 
 gitenv() { . <(curl -sS https://raw.githubusercontent.com/jeffreydvp/bash-functions/master/functions.sh); }
 myenv() { . $bash_root/main.sh; }

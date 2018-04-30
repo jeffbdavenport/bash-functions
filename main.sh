@@ -12,13 +12,15 @@ delete_compare_develop() {
 
 develop_diff() {
   branch=$(git branch --merged|grep \*|sed "s/^* //")
-  compare_develop >/dev/null 2>&1
-  git diff origin/develop --name-status | grep -v ^D
-  delete_compare_develop "$branch" >/dev/null 2>&1
+  compare_develop >/dev/null 2>&1 && git diff origin/develop --name-status | grep -v ^D && delete_compare_develop "$branch" >/dev/null 2>&1
 }
 
 changed_files() {
- atom $(develop_diff|sed 's/^.\s*//'|tr '\n', ' ')
+  diff=$(develop_diff)
+  echo "$diff"
+  if [ ! -z "$diff" ];then
+    atom $(echo "$diff"|sed 's/^.\s*//'|tr '\n', ' ')
+  fi
 }
 
 gitenv() { . <(curl -sS https://raw.githubusercontent.com/jeffreydvp/bash-functions/master/functions.sh); }

@@ -7,6 +7,7 @@ compare_develop() {
 }
 
 delete_compare_develop() {
+  # TODO : This should only happen if branch is compare_develop
   git reset --hard && git checkout "$1"  && git branch -D compare_develop
 }
 

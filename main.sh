@@ -148,5 +148,5 @@ rails()
 }
 
 ruby $bash_root/main.rb
-guake -r 'local'
+# guake -r 'local'
 echo 'Loaded environment'

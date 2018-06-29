@@ -1,5 +1,11 @@
 # Ensure profile is loaded
+alias box='/usr/bin/ssh -A the-box'
 bash_root=~/my_projects/bash-functions
+
+pr_ready() {
+  branch=$(git branch --merged|grep \*|sed "s/^* //")
+  rspec && git push -u origin $branch
+}
 
 compare_develop() {
     git branch -D compare_develop
@@ -31,7 +37,7 @@ if [ "$0" != 'bash' ];then
   bash -l
   return 0
 fi
-. ~/git_prompt.bash
+
 PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
 clean_branches(){
   git checkout develop
@@ -131,10 +137,11 @@ ext()
   fi
 }
 
-ssh()
+cssh()
 {
-  guake -e "guake -r $1"
-  guake -e "/usr/bin/ssh ${@:1}"
+  guake -r "$1"
+  ssh-add
+  /usr/bin/ssh -A the-box -t "ssh ${@:1}"
 }
 
 rails()
@@ -149,4 +156,8 @@ rails()
 
 ruby $bash_root/main.rb
 # guake -r 'local'
+powerline-daemon -q
+export POWERLINE_BASH_CONTINUATION=1
+export POWERLINE_BASH_SELECT=1
+. /usr/share/powerline/bindings/bash/powerline.sh
 echo 'Loaded environment'

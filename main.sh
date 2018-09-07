@@ -10,6 +10,11 @@ pr_ready() {
   rspec && git push -u origin $branch
 }
 
+pr_ready() {
+  branch=$(git branch --merged|grep \*|sed "s/^* //")
+  rspec && git push -u origin $branch
+}
+
 compare_develop() {
     git branch -D compare_develop
     git checkout -b compare_develop && git merge origin/develop --squash -s recursive && git add -A && git commit -m "merge"

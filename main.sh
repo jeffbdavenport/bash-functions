@@ -47,7 +47,7 @@ if [ "$0" != 'bash' ];then
 fi
 PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
 clean_branches(){
-  git checkout develop
+  git checkout master
   for b in `git branch --merged|sed "/^\*/d"|sed "/develop/d"`;do
     git branch -d $b
   done

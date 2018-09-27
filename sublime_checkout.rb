@@ -28,6 +28,7 @@ module GitCmd
 
   def self.cmd(command)
     `#{cmd}`
+    return false if $?.nil?
     $?.to_i == 0 ? true : false
   end
 end

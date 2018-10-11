@@ -163,8 +163,8 @@ rails()
 
 ruby $bash_root/main.rb
 # guake -r 'local'
-powerline-daemon -q
-export POWERLINE_BASH_CONTINUATION=1
-export POWERLINE_BASH_SELECT=1
-. /usr/share/powerline/bindings/bash/powerline.sh
+# powerline-daemon -q
+# export POWERLINE_BASH_CONTINUATION=1
+# export POWERLINE_BASH_SELECT=1
+# . /usr/share/powerline/bindings/bash/powerline.sh
 echo 'Loaded environment'

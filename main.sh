@@ -2,6 +2,10 @@
 alias box='/usr/bin/ssh -A the-box'
 export PAGER='less -R'
 alias ri'=ri -f ansi'
+
+# Disable Ctrl+S to freeze term
+stty -ixon
+
 bash_root=~/my_projects/bash-functions
 . $bash_root/main_functions.sh
 

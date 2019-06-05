@@ -5,6 +5,7 @@ if [ ! -d "$project_home" ];then
 fi
 echo $project_home
 sublime_checkout() {
+
   prev_branch=$(git rev-parse --abbrev-ref HEAD)
   branch=$1
   if [ -z "$branch" ];then
@@ -12,15 +13,28 @@ sublime_checkout() {
   fi
   project="${PWD##*/}"
   link="$project_home/$project.sublime-workspace"
-  if [ ! -f "$project_home/$project.sublime-project" ];then
-    echo "No project!"
-    return
-  fi
   if git checkout "$branch" || git checkout -b "$branch";then
+    folders="$(pwd)"
     cd "$project_home"
-    if mkdir "$project" 2>/dev/null;then
+    if [ ! -f "$project.sublime-project" ];then
+      cat <<EOF > "$project.sublime-project"
+{
+  "folders":
+  [
+  {
+    "path": "$folders"
+  }
+  ]
+}
+EOF
+      cat <<EOF > "$project.sublime-workspace"
+{
+}
+EOF
+    fi
+    if mkdir -p "$(dirname "$project/$project/$branch")" 2>/dev/null;then
       mv "$link" "$project" &&
-      ln -s "$project/$project.sublime-workspace" "$link"
+      ln -s "$project_home/$project/$project.sublime-workspace" "$link"
     fi
     if [ ! -f "$project/$branch.sublime-workspace" ];then
       if [ -f "$project/$project/$prev_branch.sublime-workspace" ];then
@@ -32,19 +46,23 @@ sublime_checkout() {
     if [ -L "$project.sublime-workspace" ];then
       if [ "$(readlink -f $link)" != "$project_home/$project/$branch.sublime-workspace" ];then
         if rm "$project.sublime-workspace";then
-          ln -s "$project/$branch.sublime-workspace" "$project.sublime-workspace"
+          ln -s "$project_home/$project/$branch.sublime-workspace" "$project.sublime-workspace"
         fi
       fi
     else
-      ln -s "$project/$branch.sublime-workspace" "$project.sublime-workspace"
+      ln -s "$project_home/$project/$branch.sublime-workspace" "$project.sublime-workspace"
+    fi
+    if [ ! -L "$project/$project.sublime-project" ];then
+      ln -s "$project_home/$project.sublime-project" "$project/$project.sublime-project"
     fi
     cd -
 
     workspace="$project_home/$project/$branch.sublime-workspace"
+    echo "Switching to $workspace"
     if [ -f "$workspace" ];then
       subl -a "$workspace"
     else
-      puts "Invalid workspace! $workspace"
+      echo "Invalid workspace! $workspace"
     fi
   fi
 }

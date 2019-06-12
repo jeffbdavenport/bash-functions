@@ -1,13 +1,21 @@
 # Ensure profile is loaded
-alias box='/usr/bin/ssh -A the-box'
+echo $(pwd)
+if [ "$0" != 'bash' ];then
+  bash -l
+  return 0
+fi
+PS1='\u@\h \W$(__git_ps1 " (%s)")\$ '
 export PAGER='less -R'
 alias ri'=ri -f ansi'
 
 # Disable Ctrl+S to freeze term
 stty -ixon
 
+
 bash_root=~/my_projects/bash-functions
 . $bash_root/main_functions.sh
+PATH=$(ruby -e "puts '$PATH'.split(':').uniq.join(':')")
+
 
 pr_ready() {
   branch=$(git branch --merged|grep \*|sed "s/^* //")
@@ -44,12 +52,9 @@ changed_files() {
 
 # gitenv() { . <(curl -sS https://raw.githubusercontent.com/jeffreydvp/bash-functions/master/functions.sh); }
 myenv() { . $bash_root/main.sh; }
+
 xmod() { xmodmap ~/.Xmodmap; }
-if [ "$0" != 'bash' ];then
-  bash -l
-  return 0
-fi
-PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
+
 clean_branches(){
   git checkout master
   for b in `git branch --merged|sed "/^\*/d"|sed "/develop/d"`;do
@@ -101,8 +106,6 @@ Commit only
 gitc <commit message>
 EOF
 }
-
-PATH=$(ruby -e "puts '$PATH'.split(':').uniq.join(':')")
 
 duse(){
   dir='.'

@@ -3,8 +3,8 @@ project_home="$HOME/.config/sublime-text-3/Packages/User/Projects"
 if [ ! -d "$project_home" ];then
   project_home="$HOME/Library/Application Support/Sublime Text 3/Packages/User/Projects"
 fi
-echo $project_home
 sublime_checkout() {
+  echo "Project Home: $project_home"
 
   prev_branch=$(git rev-parse --abbrev-ref HEAD)
   branch=$1
@@ -31,8 +31,9 @@ EOF
 {
 }
 EOF
+echo 'test'
     fi
-    if mkdir -p "$(dirname "$project/$project/$branch")" 2>/dev/null;then
+    if mkdir -p "$(dirname "$project/$branch")" 2>/dev/null;then
       mv "$link" "$project" &&
       ln -s "$project_home/$project/$project.sublime-workspace" "$link"
     fi

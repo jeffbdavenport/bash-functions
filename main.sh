@@ -13,7 +13,6 @@ stty -ixon
 
 
 bash_root=~/my_projects/bash-functions
-. $bash_root/main_functions.sh
 PATH=$(ruby -e "puts '$PATH'.split(':').uniq.join(':')")
 
 

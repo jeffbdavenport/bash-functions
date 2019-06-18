@@ -174,3 +174,7 @@ ruby $bash_root/main.rb
 # export POWERLINE_BASH_SELECT=1
 # . /usr/share/powerline/bindings/bash/powerline.sh
 echo 'Loaded environment'
+
+_git_scheckout() {
+  _git_checkout
+}

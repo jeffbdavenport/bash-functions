@@ -12,7 +12,7 @@ alias ri'=ri -f ansi'
 stty -ixon
 
 
-bash_root=~/my_projects/bash-functions
+bash_root=~/projects/bash-functions
 PATH=$(ruby -e "puts '$PATH'.split(':').uniq.join(':')")
 
 

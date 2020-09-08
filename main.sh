@@ -3,7 +3,7 @@ if [ "$0" != 'bash' ];then
   bash -l
   return 0
 fi
-cd ~/projects
+cd ~/sandbox
 echo $(pwd)
 PS1='\u@\h \W$(__git_ps1 " (%s)")\$ '
 export PAGER='less -R'

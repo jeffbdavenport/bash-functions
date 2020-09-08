@@ -1,16 +1,16 @@
 # Ensure profile is loaded
-echo $(pwd)
 if [ "$0" != 'bash' ];then
   bash -l
   return 0
 fi
+cd ~/projects
+echo $(pwd)
 PS1='\u@\h \W$(__git_ps1 " (%s)")\$ '
 export PAGER='less -R'
 alias ri'=ri -f ansi'
 
 # Disable Ctrl+S to freeze term
 stty -ixon
-
 
 bash_root=~/projects/bash-functions
 PATH=$(ruby -e "puts '$PATH'.split(':').uniq.join(':')")
@@ -167,7 +167,7 @@ rails()
   $GEM_HOME/bin/rails ${@:1}
 }
 
-ruby $bash_root/main.rb
+#ruby $bash_root/main.rb
 # guake -r 'local'
 # powerline-daemon -q
 # export POWERLINE_BASH_CONTINUATION=1

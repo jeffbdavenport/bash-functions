@@ -3,7 +3,7 @@ if [ "$0" != 'bash' ];then
   bash -l
   return 0
 fi
-cd ~/sandbox
+# #cd ~/sandbox
 echo $(pwd)
 PS1='\u@\h \W$(__git_ps1 " (%s)")\$ '
 export PAGER='less -R'
@@ -13,7 +13,10 @@ alias ri'=ri -f ansi'
 stty -ixon
 
 bash_root=~/projects/bash-functions
+PATH="$PATH:$HOME/.local/bin"
 PATH=$(ruby -e "puts '$PATH'.split(':').uniq.join(':')")
+
+alias be='bundle exec'
 
 
 pr_ready() {

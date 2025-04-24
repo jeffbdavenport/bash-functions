@@ -7,9 +7,9 @@
 #  scheckout = !sh /full/path/to/sublime_checkout.sh
 
 
-project_home="$HOME/.config/sublime-text-3/Packages/User/Projects"
-if [ ! -d "$project_home" ];then
-  project_home="$HOME/Library/Application Support/Sublime Text 3/Packages/User/Projects"
+projects_home="$HOME/.config/sublime-text-3/Packages/User/Projects"
+if [ ! -d "$projects_home" ];then
+  projects_home="$HOME/Library/Application Support/Sublime Text 3/Packages/User/Projects"
 fi
 
 branch="$1"
@@ -20,31 +20,34 @@ fi
 
 # Get root directory of repository
 pwd="$(git rev-parse --show-toplevel)"
-project="$(basename "$pwd")"
+project="$(basename "$(dirname "$pwd")")_$(basename "$pwd")"
 
 SC_checkout() {
-  echo "Project Home: $project_home"
+  echo "Projects Home: $projects_home"
 
   if git checkout "$branch" || git checkout -b "$branch";then
     SC_create_project
 
-    workspace="$project_home/$project/$branch.sublime-project"
+    workspace="$projects_home/$project/$branch.sublime-project"
     echo "Switching to $workspace"
     if [ -f "$workspace" ];then
-      subl "$workspace" -a
-      sleep 0.1
-      subl "$workspace" -a
+      subl --project "$workspace" -a
+      # sleep 0.1
+      # subl --project "$workspace" -a
     else
-      echo "Invalid workspace! $workspace"
+      echo "Invalid Project! $workspace"
     fi
   fi
 }
 
 SC_create_project() {
+
   folders="$pwd"
-  cd "$project_home"
-  if [ ! -f "$project.sublime-project" ];then
-    cat <<EOF > "$project.sublime-project"
+  cd "$projects_home"
+  mkdir -p "$project" 2>/dev/null
+
+  if [ ! -f "$project/master.sublime-project" ];then
+    cat <<EOF > "$project/master.sublime-project"
 {
   "folders":
   [{
@@ -54,10 +57,8 @@ SC_create_project() {
 EOF
   fi
 
-  mkdir -p "$(dirname "$project/$branch")" 2>/dev/null
-
   if [ ! -L "$project/$branch.sublime-project" ];then
-    ln -s "$project_home/$project.sublime-project" "$project/$branch.sublime-project"
+    cp "$projects_home/$project/master.sublime-project" "$project/$branch.sublime-project"
   fi
   cd -
 }

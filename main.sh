@@ -1,13 +1,18 @@
 # Ensure profile is loaded
-if [ "$0" != 'bash' ];then
-  bash -l
-  return 0
-fi
+#if [ "$0" != 'bash' ];then
+#  bash -l
+#  return 0
+#fi
 # #cd ~/sandbox
 echo $(pwd)
 PS1='\u@\h \W$(__git_ps1 " (%s)")\$ '
 export PAGER='less -R'
-alias ri'=ri -f ansi'
+alias ri='ri -f ansi'
+alias vim='sudo vim'
+alias apt-get='sudo apt-get'
+alias apt='sudo apt'
+alias systemctl='sudo systemctl'
+alias ufw='sudo ufw'
 
 # Disable Ctrl+S to freeze term
 stty -ixon
